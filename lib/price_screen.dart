@@ -20,22 +20,10 @@ class _PriceScreenState extends State<PriceScreen> {
       isLoading = true;
     });
 
-    NetworkHelper networkHelper = NetworkHelper(
-      url: '$url?symbol=BTC&convert=$selectedCurrency',
-      apiKey: apiKey,
-    );
-
-    var currencyData = await networkHelper.getData();
-
+    NetworkHelper networkHelper = NetworkHelper();
+    var currencyData = await networkHelper.getData(selectedCurrency);
     setState(() {
-      if (currencyData != null &&
-          currencyData['data'] != null &&
-          currencyData['data']['BTC'] != null) {
-        bitcoinPrice =
-            currencyData['data']['BTC']['quote'][selectedCurrency]['price'];
-      }
-      bitcoinPrice =
-          currencyData['data']['BTC']['quote'][selectedCurrency]['price'];
+      bitcoinPrice = currencyData;
       isLoading = false;
     });
   }
